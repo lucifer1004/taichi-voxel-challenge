@@ -16,7 +16,14 @@ INNER = (38, 16)
 
 @ti.func
 def should_be_white(i, j):
-    return (abs(i) <= OUTER[0] and abs(j) <= OUTER[1]) and (abs(i) == OUTER[0] or i == 0 or (9 < ti.sqrt(i ** 2 + j ** 2) <= 10) or abs(j) == OUTER[1] or (abs(i) == INNER[0] and abs(j) <= INNER[1]) or (abs(i) >= INNER[0] and abs(j) == INNER[1]) or (4 < ti.sqrt((i - OUTER[0]) ** 2 + (j - OUTER[1]) ** 2) <= 5) or (4 < ti.sqrt((i + OUTER[0]) ** 2 + (j - OUTER[1]) ** 2) <= 5) or (4 < ti.sqrt((i - OUTER[0]) ** 2 + (j + OUTER[1]) ** 2) <= 5) or (4 < ti.sqrt((i + OUTER[0]) ** 2 + (j + OUTER[1]) ** 2) <= 5))
+    return (abs(i) <= OUTER[0] and abs(j) <= OUTER[1]) and (
+        abs(i) == OUTER[0] or i == 0 or (9 < ti.sqrt(i ** 2 + j ** 2) <= 10) or
+        abs(j) == OUTER[1] or (abs(i) == INNER[0] and abs(j) <= INNER[1]) or
+        (abs(i) >= INNER[0] and abs(j) == INNER[1]) or
+        (4 < ti.sqrt((i - OUTER[0]) ** 2 + (j - OUTER[1]) ** 2) <= 5) or
+        (4 < ti.sqrt((i + OUTER[0]) ** 2 + (j - OUTER[1]) ** 2) <= 5) or
+        (4 < ti.sqrt((i - OUTER[0]) ** 2 + (j + OUTER[1]) ** 2) <= 5) or
+        (4 < ti.sqrt((i + OUTER[0]) ** 2 + (j + OUTER[1]) ** 2) <= 5))
 
 
 @ti.kernel
