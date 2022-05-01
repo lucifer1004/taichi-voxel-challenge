@@ -1,4 +1,4 @@
-from scene import Scene, MAT_LAMBERTIAN
+from scene import Scene, MAT_LAMBERTIAN, MAT_LIGHT
 import taichi as ti
 from taichi.math import *
 
@@ -10,7 +10,7 @@ scene.set_directional_light((0.5, 0.5, 0.5),
 
 
 @ti.func
-def random_walk(xl, xu, yl, yu, zl, zu, rl, ru, gl, gu, bl, bu, num=1000):
+def random_walk(xl, xu, yl, yu, zl, zu, rl, ru, gl, gu, bl, bu, mat, num=1000):
     x = (xl + xu) // 2
     y = (yl + yu) // 2
     z = (zu + zu) // 2
@@ -47,12 +47,21 @@ def random_walk(xl, xu, yl, yu, zl, zu, rl, ru, gl, gu, bl, bu, num=1000):
             b = b - 1 if b - 1 >= bl else bu
         else:
             b = b + 1 if b + 1 <= bu else bl
-        scene.set_voxel(vec3(x, y, z), MAT_LAMBERTIAN, vec3(r, g, b) * 0.01)
+        scene.set_voxel(vec3(x, y, z), mat, vec3(r, g, b) * 0.01)
 
 
 @ ti.kernel
 def initialize_voxels():
-    random_walk(-30, 30, 0, 60, -30, 30, 0, 100, 0, 100, 0, 100, 50000)
+    random_walk(-64, 63, 0, 0, -64, 63, 20, 40, 60,
+                100, 20, 40, MAT_LAMBERTIAN, 100000)
+    random_walk(-25, 25, 1, 51, -25, 25, 0, 100, 0,
+                100, 0, 100, MAT_LAMBERTIAN, 50000)
+    for x in range(-64, 64):
+        for y in range(-64, 64):
+            _, color = scene.get_voxel(vec3(x, 0, y))
+            if color[1] < 0.6:
+                scene.set_voxel(vec3(x, 0, y), MAT_LIGHT, vec3(
+                    ti.random() * 0.2 + 0.1, ti.random() * 0.2 + 0.1, ti.random() * 0.2 + 0.8))
 
 
 initialize_voxels()
