@@ -8,12 +8,6 @@ scene.set_background_color((1.0, 1.0, 1.0))
 scene.set_directional_light((0.5, 0.5, 0.5),
                             0.02, (1.0, 1.0, 1.0))
 
-GREEN = vec3(0.0, 1.0, 0.0)
-WHITE = vec3(1.0, 1.0, 1.0)
-
-cl = 0.0
-cu = 1.0
-
 
 @ti.func
 def random_walk(xl, xu, yl, yu, zl, zu, rl, ru, gl, gu, bl, bu, num=1000):
